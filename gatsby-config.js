@@ -1,9 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Alumni Portal`,
+    description: `Network with past and current BU UPE members.`,
+    author: `BU UPE`,
+    siteUrl: `https://upe.bu.edu/alumni`,
   },
+  pathPrefix: `/alumni`,
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -18,8 +20,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `BU UPE Alumni Portal`,
+        short_name: `Alumni Portal`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
