@@ -1,22 +1,35 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { useContext, useEffect } from "react";
+import { Link } from "gatsby";
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import { AuthUserContext, withFirebase } from "@buupe/react-components";
+import SEO from "../components/SEO";
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+const IndexPage = ({ firebase }) => {
+  const authUser = useContext(AuthUserContext);
 
-export default IndexPage
+  useEffect(() => {
+    const loadUser = async () => {
+      const { data: user } = await firebase
+        .getUser({ uid: authUser.uid })
+        .catch(console.error);
+      //if (!user) await firebase.createUser() TODO: Finish this
+    };
+    if (firebase) loadUser();
+  }, [firebase]);
+
+  return authUser ? (
+    <>
+      <SEO title="Home" />
+      <h1>Welcome {authUser.name}</h1>
+      <p>Get ready to network.</p>
+    </>
+  ) : (
+    <>
+      <SEO title="Alumni" />
+      <h1>Welcome.</h1>
+      <p>Here are some lovely stats on our alumni..</p>
+    </>
+  );
+};
+
+export default withFirebase(IndexPage);
